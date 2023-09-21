@@ -6,9 +6,9 @@ $endpoint = isset($_GET['endpoint']) ? $_GET['endpoint'] : null;
 // Fetch the raw payload data directly from the request body
 $payload = file_get_contents('php://input');
 
-if (!$endpoint || !$payload) {
+if (!$endpoint) {
     header("HTTP/1.0 400 Bad Request");
-    echo "Endpoint or Payload missing!";
+    echo "Endpoint  missing!";
     exit;
 }
 
@@ -19,10 +19,11 @@ echo $response;
 function forwardPayloadToEndpoint($endpoint, $payload) {
     // Initialize cURL session
     $ch = curl_init($endpoint);
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
 
     // Set cURL options
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "$requestMethod");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json',
