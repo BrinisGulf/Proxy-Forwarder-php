@@ -1,5 +1,9 @@
 <?php
 
+header("Access-Control-Allow-Origin: *"); // Allows any origin. Be cautious about this in production
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // Allows these request methods
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+
 // The URL to forward to
 $endpoint = isset($_GET['endpoint']) ? $_GET['endpoint'] : null;
 
